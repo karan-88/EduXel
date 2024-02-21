@@ -1,0 +1,42 @@
+import streamlit as st
+import joblib
+from nltk.tokenize import word_tokenize
+import re
+from nltk.corpus import stopwords
+from nltk.stem import WordNetLemmatizer
+
+# Load the logistic regression model and TF-IDF vectorizer
+lr_model = joblib.load('logistic_regression_model.joblib')
+tfidf_vectorizer = joblib.load('tfidf_vectorizer.joblib')
+
+# Define a lemmatizer
+lemmatizer = WordNetLemmatizer()
+
+# Define the predict_sentiment function
+def predict_sentiment(input_text):
+    preprocessed_text = perform_lemmatization(input_text)
+    vectorized_input = tfidf_vectorizer.transform([preprocessed_text])
+    prediction = lr_model.predict(vectorized_input)
+    if prediction[0] == 'Positive':
+        return "Positive"
+    else:
+        return "Negative"
+
+# Define the lemmatization function
+def perform_lemmatization(content):
+    words = word_tokenize(re.sub('[^a-zA-Z]', ' ', content.lower()))
+    lemmatized_words = [lemmatizer.lemmatize(word) for word in words if word not in stopwords.words('english')]
+    lemmatized_text = ' '.join(lemmatized_words)
+    return lemmatized_text
+
+# Set the title of the app
+st.title('Sentiment Analysis')
+
+# Create a text input field for user input
+input_text = st.text_area('Enter your text:', '')
+
+# Add a button to trigger sentiment prediction
+if st.button('Predict'):
+    # Perform sentiment prediction when the button is clicked
+    predicted_sentiment = predict_sentiment(input_text)
+    st.write('Predicted sentiment:', predicted_sentiment)
