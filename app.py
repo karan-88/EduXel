@@ -6,17 +6,22 @@ from nltk.corpus import stopwords
 from nltk.stem import WordNetLemmatizer
 import nltk
 from nltk import download
+from nltk.corpus import wordnet
 
+# Check if NLTK data is present, if not, download it
 try:
-    nltk.corpus.stopwords.words('english')
+    nltk.data.find('corpora/stopwords.zip')
 except LookupError:
     download('stopwords')
 
-# Download NLTK's 'punkt' tokenizer data
 try:
-    nltk.data.find('tokenizers/punkt')
+    nltk.data.find('corpora/wordnet.zip')
 except LookupError:
-    download('punkt')
+    download('wordnet')
+
+# Set up NLTK resources
+stopwords.words('english')
+wordnet.ensure_loaded()
 
 # Load the logistic regression model and TF-IDF vectorizer
 lr_model = joblib.load('logistic_regression_model.joblib')
