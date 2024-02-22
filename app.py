@@ -4,6 +4,14 @@ from nltk.tokenize import word_tokenize
 import re
 from nltk.corpus import stopwords
 from nltk.stem import WordNetLemmatizer
+import nltk
+from nltk import download
+
+# Download NLTK's 'punkt' tokenizer data
+try:
+    nltk.data.find('tokenizers/punkt')
+except LookupError:
+    download('punkt')
 
 # Load the logistic regression model and TF-IDF vectorizer
 lr_model = joblib.load('logistic_regression_model.joblib')
