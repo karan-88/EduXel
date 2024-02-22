@@ -55,8 +55,9 @@ def perform_lemmatization(content):
 # Set the title of the app
 st.title('Sentiment Analysis')
 
-# Create a text input field for user input
-input_text = st.text_area('Enter your text:', '')
+# Add a note as placeholder text inside the input field
+placeholder_text = "This model is in its rudimentary state. Can detect only 'Positive' or 'Negative' sentiments. It has not been trained on neutral statements and will not give accurate results if entered.\n\nFor starters, type \"I really loved that movie! it was amazing\" and hit the button!"
+input_text = st.text_area('Enter your text:', value='', placeholder=placeholder_text)
 
 # Add a button to trigger sentiment prediction
 if st.button('Predict'):
