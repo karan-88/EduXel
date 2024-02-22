@@ -8,7 +8,7 @@ import nltk
 from nltk import download
 from nltk.corpus import wordnet
 
-# Check if NLTK data is present, if not, download it
+
 try:
     nltk.data.find('corpora/stopwords.zip')
 except LookupError:
@@ -31,11 +31,8 @@ wordnet.ensure_loaded()
 # Load the logistic regression model and TF-IDF vectorizer
 lr_model = joblib.load('logistic_regression_model.joblib')
 tfidf_vectorizer = joblib.load('tfidf_vectorizer.joblib')
-
-# Define a lemmatizer
 lemmatizer = WordNetLemmatizer()
 
-# Define the predict_sentiment function
 def predict_sentiment(input_text):
     preprocessed_text = perform_lemmatization(input_text)
     vectorized_input = tfidf_vectorizer.transform([preprocessed_text])
@@ -45,7 +42,6 @@ def predict_sentiment(input_text):
     else:
         return "Negative"
 
-# Define the lemmatization function
 def perform_lemmatization(content):
     words = word_tokenize(re.sub('[^a-zA-Z]', ' ', content.lower()))
     lemmatized_words = [lemmatizer.lemmatize(word) for word in words if word not in stopwords.words('english')]
