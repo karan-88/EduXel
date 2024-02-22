@@ -19,6 +19,11 @@ try:
 except LookupError:
     download('wordnet')
 
+try:
+    nltk.data.find('tokenizers/punkt')
+except LookupError:
+    download('punkt')
+
 # Set up NLTK resources
 stopwords.words('english')
 wordnet.ensure_loaded()
