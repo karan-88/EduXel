@@ -7,6 +7,11 @@ from nltk.stem import WordNetLemmatizer
 import nltk
 from nltk import download
 
+try:
+    nltk.corpus.stopwords.words('english')
+except LookupError:
+    download('stopwords')
+
 # Download NLTK's 'punkt' tokenizer data
 try:
     nltk.data.find('tokenizers/punkt')
